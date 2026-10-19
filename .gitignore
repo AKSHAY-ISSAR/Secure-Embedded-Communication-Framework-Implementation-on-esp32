@@ -1,0 +1,39 @@
+# ---- ESP-IDF build output ------------------------------------------------
+build/
+build_*/
+managed_components/
+dependencies.lock
+
+# ---- Generated / secret config -------------------------------------------
+# sdkconfig files embed CONFIG_LINK_PSK in plain text. Never commit them.
+sdkconfig
+sdkconfig.*
+!sdkconfig.defaults
+
+# ---- Runtime output ------------------------------------------------------
+*.log
+telemetry.log
+
+# ---- Windows / WSL download markers --------------------------------------
+*Zone.Identifier*
+*Zone*Identifier*
+
+# ---- Editors, caches, OS -------------------------------------------------
+.vscode/
+.idea/
+.cache/
+.clangd/
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+# ---- Additional Editor & Swap Files --------------------------------------
+*.swp
+*.swo
+*~
+*.tmp
+*.bak
+
+# ---- Optional: Keep VS Code launch configs while ignoring local settings --
+# If you want to share VS Code debug setups with teammates, replace .vscode/ with:
+# .vscode/settings.json

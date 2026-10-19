@@ -1,0 +1,51 @@
+menu "Secure Link Configuration"
+
+choice LINK_NODE_ROLE
+    prompt "Node role"
+    default LINK_ROLE_A
+    help
+        Node A is the initiator (it sends SYN and is normally the one
+        plugged into the laptop). Node B is the responder / telemetry node.
+
+    config LINK_ROLE_A
+        bool "Node A (initiator, laptop-attached)"
+    config LINK_ROLE_B
+        bool "Node B (responder, autonomous telemetry)"
+endchoice
+
+config LINK_WIFI_CHANNEL
+    int "ESP-NOW Wi-Fi channel (1-13)"
+    range 1 13
+    default 6
+
+config LINK_PSK
+    string "Pre-shared key for handshake authentication"
+    default "change-me-before-you-deploy-this"
+    help
+        This is NOT the session key. It is only mixed into the key
+        derivation so that an active man-in-the-middle cannot complete
+        the X25519 handshake. Both nodes must use the same string.
+
+config LINK_ENABLE_CONSOLE
+    bool "Enable UART0 console bridge (laptop <-> link)"
+    default y
+
+config LINK_ENABLE_TELEMETRY
+    bool "Enable autonomous telemetry sender"
+    default y if LINK_ROLE_B
+    default n
+
+config LINK_TELEMETRY_PERIOD_MS
+    int "Telemetry period (ms)"
+    depends on LINK_ENABLE_TELEMETRY
+    range 200 600000
+    default 5000
+
+config LINK_ENABLE_LONG_RANGE
+    bool "Enable ESP-NOW long range (LR) PHY"
+    default n
+    help
+        Roughly 2x range, but both nodes must have it enabled and no
+        normal Wi-Fi station can talk to them.
+
+endmenu

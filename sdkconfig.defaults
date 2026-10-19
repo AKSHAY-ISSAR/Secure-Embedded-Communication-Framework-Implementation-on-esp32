@@ -1,0 +1,18 @@
+# Options this project needs that ESP-IDF does NOT enable by default.
+# Passed with:  -D SDKCONFIG_DEFAULTS=sdkconfig.defaults
+
+# HKDF-SHA256 key derivation (crypto.c fails to link without this)
+CONFIG_MBEDTLS_HKDF_C=y
+
+# AES-GCM authenticated encryption (hardware AES accelerated)
+CONFIG_MBEDTLS_GCM_C=y
+CONFIG_MBEDTLS_HARDWARE_AES=y
+
+# 1 ms RTOS tick so the millisecond timeouts in link_config.h behave as written
+CONFIG_FREERTOS_HZ=1000
+
+# 160 MHz CPU, 4 MB flash (typical ESP32-WROOM-32U). Change for your module.
+CONFIG_ESP32_DEFAULT_CPU_FREQ_160=y
+CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
+
+# NOTE: do not put CONFIG_LINK_PSK here. Set it per-build in menuconfig.
